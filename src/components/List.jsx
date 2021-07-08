@@ -9,6 +9,7 @@ export const List = ({ todoList, toggleCompleted, removeTodo }) => {
         return (
           <Item
             key={id}
+            id={id}
             title={title}
             completed={completed}
             toggleCompleted={() => toggleCompleted(id)}
@@ -24,7 +25,7 @@ const StyledList = styled.ul`
   list-style: none;
   padding: 12px;
   border-radius: 4px;
-  max-height: 60vh;
+  height: 50vh;
   overflow-y: scroll;
   background-color: #fff;
 `;
