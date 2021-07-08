@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { List } from './components/List';
 import { Form } from './components/Form';
 import { Modal } from './components/Modal';
@@ -6,10 +6,18 @@ import { Interface } from './components/Interface';
 import styled from 'styled-components';
 import axios from 'axios';
 import { nanoid } from 'nanoid';
+import { ToggleButton } from './components/ToggleButton';
+import { Context } from './utils/context';
 
 const App = () => {
+  const [state] = useContext(Context);
   const [todoList, setTodoList] = useState([]);
   const [inputState, setInputState] = useState(false);
+
+  const toggleEdit = () => {
+    if (inputState !== 'edit') setInputState('edit');
+    if (inputState === 'edit') setInputState(false);
+  };
 
   useEffect(() => {
     axios
@@ -47,21 +55,21 @@ const App = () => {
   const removeTodo = (id) => {
     setTodoList((prev) =>
       prev.filter((todo) => {
-        if (todo.completed) return todo.id !== id;
+        if (todo.completed || !state.safetyRemove) return todo.id !== id;
         return true;
       })
     );
   };
 
   const completedAllRemove = () => {
-    setTodoList((prev) => prev.filter((todo) => !todo.completed));
+    if (window.confirm('完了したTODOをすべて削除しますか？'))
+      setTodoList((prev) => prev.filter((todo) => !todo.completed));
   };
 
   const allRemove = () => {
     if (window.confirm('TODOをすべて削除しますか？')) setTodoList([]);
   };
 
-  console.log(todoList);
   return (
     <StyledApp>
       <Modal open={inputState === 'create'} close={() => setInputState(false)}>
@@ -69,6 +77,14 @@ const App = () => {
       </Modal>
       <div className='app'>
         <h1>TO DO LIST.</h1>
+        <div className='toggle-edit'>
+          <span>Edit:</span>
+          <ToggleButton
+            id='edit'
+            checked={inputState === 'edit'}
+            onChange={toggleEdit}
+          />
+        </div>
         <Interface
           isCreating={() => setInputState('create')}
           isEditting={() => setInputState('edit')}
@@ -103,14 +119,29 @@ const StyledApp = styled.div`
   background-size: 100% 50%;
   background-repeat: no-repeat;
   background-color: #90f4b9;
+
   .app {
     background-color: #eee;
     border: 1px solid #444;
     border-radius: 8px;
     padding: 24px;
+    position: relative;
     > h1 {
       font-size: 28px;
       text-align: center;
+    }
+    .toggle-edit {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 12px;
+
+      position: absolute;
+      top: 0;
+      right: 0;
+      > span {
+        margin-right: 8px;
+      }
     }
   }
 `;

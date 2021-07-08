@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 import { Context } from '../utils/context';
+import { ToggleButton } from './ToggleButton';
 
 export const Interface = ({
   isCreating,
@@ -15,16 +16,15 @@ export const Interface = ({
   return (
     <StyledInterface>
       <button onClick={isCreating}>+Add</button>
-      <button onClick={isEditting}>Edit</button>
       {editState && (
-        <>
+        <div className='edit-menu'>
           <button onClick={completedAllRemove}>completedAllRemove</button>
           <button onClick={allRemove}>All remove</button>
-          <div class='remove-switch'>
-            <input
-              id='toggle'
-              class='toggle-input'
-              type='checkbox'
+          <div className='toggle-safety-remove'>
+            <span>Safety remove:</span>
+            <ToggleButton
+              id='afety-remove'
+              checked={state.safetyRemove}
               onChange={() =>
                 setState((prev) => ({
                   ...prev,
@@ -32,58 +32,28 @@ export const Interface = ({
                 }))
               }
             />
-            <label for='toggle' class='toggle-label' />
           </div>
-        </>
+        </div>
       )}
     </StyledInterface>
   );
 };
 
 const StyledInterface = styled.div`
-  // input
-  .toggle-input {
-    position: absolute;
-    left: 0;
-    top: 0;
+  display: flex;
+  align-items: center;
+  .edit-menu {
+    margin-left: 20px;
     width: 100%;
-    height: 100%;
-    z-index: 5;
-    opacity: 0;
-    cursor: pointer;
-  }
-
-  // label
-  .toggle-label {
-    width: 75px;
-    height: 42px;
-    background: #ccc;
-    position: relative;
-    display: inline-block;
-    border-radius: 46px;
-    transition: 0.4s;
-    box-sizing: border-box;
-    &:after {
-      content: '';
-      position: absolute;
-      width: 42px;
-      height: 42px;
-      border-radius: 100%;
-      left: 0;
-      top: 0;
-      z-index: 2;
-      background: #fff;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-      transition: 0.4s;
-    }
-  }
-
-  // input:ckeecked
-  .toggle-input:checked {
-    + .toggle-label {
-      background-color: #4bd865;
-      &:after {
-        left: 40px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    .toggle-safety-remove {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      > span {
+        margin-right: 8px;
       }
     }
   }
