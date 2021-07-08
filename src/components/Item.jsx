@@ -4,17 +4,31 @@ import { Checkbox } from './Checkbox';
 import { RemoveButton } from './RemoveButton';
 import { Context } from '../utils/context';
 
-export const Item = ({ id, title, completed, toggleCompleted, removeTodo }) => {
+export const Item = ({
+  id,
+  title,
+  completed,
+  toggleCompleted,
+  removeTodo,
+  isEdit,
+}) => {
   const [state] = useContext(Context);
 
   return (
     <StyledItem checked={completed}>
       <Checkbox id={id} checked={completed} onChange={toggleCompleted} />
-      <span>{title}</span>
-      <RemoveButton
-        onClick={removeTodo}
-        disabled={!completed && state.safetyRemove}
-      />
+      <span
+        contentEditable={isEdit}
+        onInput={(e) => console.log(e.target.innerText)} // 編集機能
+      >
+        {title}
+      </span>
+      {isEdit && (
+        <RemoveButton
+          onClick={removeTodo}
+          disabled={!completed && state.safetyRemove}
+        />
+      )}
     </StyledItem>
   );
 };

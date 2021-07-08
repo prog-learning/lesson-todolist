@@ -6,12 +6,11 @@ export const ToggleButton = ({ id, checked, onChange }) => {
     <StyledToggleButton checked={checked}>
       <input
         id={`toggle-button-${id}`}
-        class='toggle-input'
         type='checkbox'
         checked={checked}
         onChange={onChange}
       />
-      <label for={`toggle-button-${id}`} class='toggle-label' />
+      <label htmlFor={`toggle-button-${id}`} className='toggle-label' />
     </StyledToggleButton>
   );
 };
@@ -19,7 +18,7 @@ export const ToggleButton = ({ id, checked, onChange }) => {
 const StyledToggleButton = styled.div`
   display: inline-block;
   height: 20px;
-  .toggle-input {
+  > input[type='checkbox'] {
     display: none;
   }
 

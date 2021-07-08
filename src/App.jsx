@@ -96,6 +96,7 @@ const App = () => {
           todoList={todoList}
           toggleCompleted={toggleCompleted}
           removeTodo={removeTodo}
+          isEdit={inputState === 'edit'}
         />
       </div>
     </StyledApp>
@@ -108,24 +109,25 @@ const StyledApp = styled.div`
   justify-content: center;
   align-items: center;
 
-  background: linear-gradient(
+  background-image: linear-gradient(
       135deg,
       rgba(246, 255, 0, 0.6),
       rgba(255, 0, 161, 0.6)
     ),
     url('https://picsum.photos/1000');
-  background-size: cover;
-  background-position: bottom 0 left 0;
-  background-size: 100% 50%;
+  background-position: bottom 50vh left 0;
+  background-size: 100% auto;
   background-repeat: no-repeat;
   background-color: #90f4b9;
 
   .app {
+    width: 700px;
     background-color: #eee;
     border: 1px solid #444;
     border-radius: 8px;
     padding: 24px;
     position: relative;
+
     > h1 {
       font-size: 28px;
       text-align: center;

@@ -1,7 +1,7 @@
 import { Item } from './Item';
 import styled from 'styled-components';
 
-export const List = ({ todoList, toggleCompleted, removeTodo }) => {
+export const List = ({ todoList, toggleCompleted, removeTodo, isEdit }) => {
   return (
     <StyledList style={{ listStyle: 'none' }}>
       {todoList.map((todo) => {
@@ -14,6 +14,7 @@ export const List = ({ todoList, toggleCompleted, removeTodo }) => {
             completed={completed}
             toggleCompleted={() => toggleCompleted(id)}
             removeTodo={() => removeTodo(id)}
+            isEdit={isEdit}
           />
         );
       })}

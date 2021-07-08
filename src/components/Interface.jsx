@@ -12,7 +12,6 @@ export const Interface = ({
 }) => {
   const [state, setState] = useContext(Context);
 
-  console.log(state);
   return (
     <StyledInterface>
       <button onClick={isCreating}>+Add</button>
@@ -42,6 +41,7 @@ export const Interface = ({
 const StyledInterface = styled.div`
   display: flex;
   align-items: center;
+  height: 30px;
   .edit-menu {
     margin-left: 20px;
     width: 100%;
